@@ -1,17 +1,35 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Admin, Resource, EditGuesser } from 'react-admin';
-import { PostList, PostCreate, PostEdit } from './posts';
 import { UserList } from './users';
+import ApolloClient from 'apollo-boost';
 
-import jsonServerProvider from 'ra-data-json-server';
+import buildGraphcoolProvider from 'ra-data-graphcool';
 
-const dataProvider = jsonServerProvider('http://jsonplaceholder.typicode.com');
+const client = new ApolloClient({ uri: 'http://localhost:8529/test-admin' });
 
+class App extends Component {
+    constructor() {
+        super();
+        this.state = { dataProvider: null };
+    }
+    componentDidMount() {
+        buildGraphcoolProvider({ clientOptions: { uri: 'http://localhost:8529/test-admin' }})
+            .then(dataProvider => this.setState({ dataProvider }));
+    }
 
-const App = () => (
-    <Admin dataProvider={dataProvider}>
-        <Resource name="posts" list={PostList} edit={PostEdit} create={PostCreate} />
-        <Resource name="users" list={UserList} edit={EditGuesser}/>
-    </Admin>
-);
+    render() {
+        const { dataProvider } = this.state;
+
+        if (!dataProvider) {
+            return <div>Loading</div>;
+        }
+
+        return (
+            <Admin dataProvider={dataProvider}>
+                <Resource name="User" list={UserList} edit={EditGuesser} />
+            </Admin>
+        );
+    }
+}
+
 export default App;
