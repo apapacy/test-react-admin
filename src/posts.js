@@ -41,7 +41,7 @@ export const PostList = props => (<List {...props} filters={<PostFilter/>}>
   </Datagrid>
 </List>);
 
-export const PostCreate = props => (<Create {...props}>
+export const PostCreate = props => (<Create {...props} undoable={false}>
   <SimpleForm>
     <ReferenceInput source="userId" reference="users">
       <SelectInput optionText="name"/>
@@ -51,7 +51,7 @@ export const PostCreate = props => (<Create {...props}>
   </SimpleForm>
 </Create>);
 
-export const PostEdit = props => (<Edit {...props} title={<PostTitle/>}>
+export const PostEdit = props => (<Edit {...props} title={<PostTitle/>} undoable={false}>
   <SimpleForm>
     <DisabledInput source="id"/>
     <ReferenceInput source="userId" reference="users">

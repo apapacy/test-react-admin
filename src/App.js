@@ -3,7 +3,8 @@ import { Admin, Resource, EditGuesser } from 'react-admin';
 import { PostList, PostCreate, PostEdit } from './posts';
 import { UserList } from './users';
 
-import jsonServerProvider from 'ra-data-json-server';
+// import jsonServerProvider from 'ra-data-json-server';
+import jsonServerProvider from './data-provider';
 
 const dataProvider = jsonServerProvider('http://jsonplaceholder.typicode.com');
 
